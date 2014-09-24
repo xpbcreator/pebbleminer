@@ -1,10 +1,14 @@
 Makefile
+Makefile.in
 .deps/
 autom4te.cache/
+aclocal.m4
 configure
 config.log
 config.status
 cpuminer-config.h
+cpuminer-config.h.in
 *.o
 minerd
-
+stamp-h1
+.dirstamp
