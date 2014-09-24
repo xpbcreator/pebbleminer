@@ -1,0 +1,10 @@
+Makefile
+.deps/
+autom4te.cache/
+configure
+config.log
+config.status
+cpuminer-config.h
+*.o
+minerd
+
