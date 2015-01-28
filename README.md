@@ -1,7 +1,7 @@
 Pebbleminer
 ==============
 
-This is a multi-threaded CPU miner for Boulderhash (used by Pebblecoin), fork of [lucasjones](https://github.com/lucasjones)'s [CPUMiner-multi](https://github.com/lucasjones/cpuminer-multi).
+This is a multi-threaded CPU miner for Boulderhash2 (used by Pebblecoin), fork of [lucasjones](https://github.com/lucasjones)'s [CPUMiner-multi](https://github.com/lucasjones/cpuminer-multi).
 
 #### Table of contents
 
