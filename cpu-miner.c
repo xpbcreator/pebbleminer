@@ -106,7 +106,7 @@ enum algos {
 };
 
 static const char *algo_names[] = {
-    [ALGO_BOULDERHASH] = "boulderhash",
+    [ALGO_BOULDERHASH] = "boulderhash2",
 };
 
 bool opt_debug = false;
@@ -177,7 +177,7 @@ static char const usage[] =
 Usage: " PROGRAM_NAME " [OPTIONS]\n\
 Options:\n\
   -a, --algo=ALGO       specify the algorithm to use\n\
-                          boulderhash  Boulderhash (default)\n\
+                          boulderhash2  Boulderhash (default)\n\
   -o, --url=URL         URL of mining server\n\
   -O, --userpass=U:P    username:password pair for mining server\n\
   -u, --user=USERNAME   username for mining server\n\
@@ -1119,8 +1119,8 @@ static void *miner_thread(void *userdata) {
             switch(opt_algo) {
             case ALGO_BOULDERHASH:
             default:
-                applog(LOG_INFO, "thread %d: %lu hashes, %.2f H/s", thr_id,
-                        hashes_done, thr_hashrates[thr_id]);
+                applog(LOG_INFO, "thread %d: %lu hashes, %.2f H/s (%.2f s/H)", thr_id,
+                        hashes_done, thr_hashrates[thr_id], 1.0 / thr_hashrates[thr_id]);
                 break;
             }
         }

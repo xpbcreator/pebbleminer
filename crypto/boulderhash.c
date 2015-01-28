@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <pthread.h>
+#include <inttypes.h>
 
 #include "hash-ops.h"
 #include "threadpool.h"
@@ -48,10 +49,25 @@ void pc_boulderhash_init(const void *data, size_t length,
   memcpy(extra, hash, sizeof(uint64_t));
 }
 
+inline uint64_t boulderhash_transform(uint64_t val)
+{
+	return UINT64_C(0x5851f42d4c957f2d) * val + UINT64_C(0x14057b7ef767814f);
+}
+
+inline uint32_t lookback_index(uint64_t val, uint32_t j)
+{
+  if (j < 5) return 0;
+  return (val >> 32) % ((j - 1) / 4) + (j - 1) * 3 / 4;
+}
+
 void pc_boulderhash_fill_state(uint64_t *cur_state)
 {
-  for (int j=1; j < BOULDERHASH_STATE_SIZE; j++) {
-    cur_state[j] = UINT64_C(0x5851f42d4c957f2d) * cur_state[j-1] + UINT64_C(0x14057b7ef767814f);
+  cur_state[1] = boulderhash_transform(cur_state[0]);
+  
+  for (uint32_t j=2; j < BOULDERHASH_STATE_SIZE; j++)
+  {
+    cur_state[j] = boulderhash_transform(cur_state[j-1]);
+    cur_state[j] ^= cur_state[lookback_index(cur_state[j], j)];
   }
 }
 
@@ -63,9 +79,9 @@ void pc_boulderhash_calc_result(uint64_t *result, uint64_t extra, uint64_t **sta
   static const int state_size_m1 = BOULDERHASH_STATE_SIZE - 1;
   
   // gen result
-  for (int k=0, c=0; k < 1064960; k++, c=(c+1)&result_size_m1) { // ~16384 values per scratchpad
+  for (int k=0, c=0; k < BOULDERHASH_ITERATIONS; k++, c=(c+1)&result_size_m1) {
     result[c] = extra ^ state[(result[c]>>32) & states_m1][result[c] & state_size_m1];
-    extra = UINT64_C(0x5851f42d4c957f2d) * extra + UINT64_C(0x14057b7ef767814f);
+    extra = boulderhash_transform(extra);
   }
 }
 

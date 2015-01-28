@@ -6,7 +6,7 @@
 	"user" : "rpcuser",
 	"pass" : "rpcpass",
 
-	"algo" : "boulderhash",
+	"algo" : "boulderhash2",
 	"threads" : "1",
 
 	"quiet" : true

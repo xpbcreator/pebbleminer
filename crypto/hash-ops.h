@@ -53,6 +53,7 @@ void cn_fast_hash(const void *data, size_t length, char *hash);
 
 #define BOULDERHASH_STATES 65
 #define BOULDERHASH_STATE_SIZE 26738688 // 204 MiB * 65 = ~12.9 GiB
+#define BOULDERHASH_ITERATIONS 42598400
 
 typedef struct {
   uint64_t *state[BOULDERHASH_STATES];

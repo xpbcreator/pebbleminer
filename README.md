@@ -17,7 +17,7 @@ This is a multi-threaded CPU miner for Boulderhash (used by Pebblecoin), fork of
 Algorithms
 ==========
 #### Currently supported
- * ✓ __boulderhash__ (Pebblecoin)
+ * ✓ __boulderhash2__ (Pebblecoin)
 
 Dependencies
 ============
